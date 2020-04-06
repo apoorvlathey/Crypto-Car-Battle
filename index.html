@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>Tutorial</title>
-    <script src="./assets/phaser.min.js"></script>
+    <script src="./assets/js/phaser.min.js"></script>
   </head>
   <body>
     <script>
@@ -12,10 +12,10 @@
       });
 
       function preload() {
-        game.load.spritesheet("map", "assets/map.jpg");
-        game.load.spritesheet("car", "assets/car.png");
-        game.load.spritesheet("building", "assets/building.png");
-        game.load.physics("collision", "assets/collision.json");
+        game.load.spritesheet("map", "./assets/images/map.jpg");
+        game.load.spritesheet("car", "./assets/images/car.png");
+        game.load.spritesheet("building", "./assets/images/building.png");
+        game.load.physics("collision", "./assets/js/collision.json");
       }
 
       var cursors;
