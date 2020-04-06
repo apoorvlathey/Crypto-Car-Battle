@@ -30,6 +30,7 @@ contract CarBattle is ERC721 {
     }
     
     function mintCar() public {
+        require(balanceOf(msg.sender) == 0);
         uint id = cars.length;
         cars.push(Car(1, 9));
         _mint(msg.sender, id);
