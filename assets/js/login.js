@@ -1,13 +1,18 @@
 var Login = {
   preload: function () {
     game.load.image(
-      "metamask-login",
-      "./assets/images/metamask-login.png"
+      "homescreen",
+      "./assets/images/homescreen.png"
+    );
+    game.load.image(
+      "metamasklogin",
+      "./assets/images/metamasklogin.png"
     );
   },
 
   create: function () {
-    this.add.button(0, 0, "metamask-login", this.web3login, this);
+    game.add.sprite(0, 0, "homescreen");
+    this.add.button(300, 450, "metamasklogin", this.web3login, this);
   },
 
   web3login: function () {

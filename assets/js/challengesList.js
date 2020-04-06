@@ -2,15 +2,32 @@ var BattleId;
 
 var ChallengesList = {
   preload: function () {
-    game.load.image("mint-car", "./assets/images/mint-car.png");
+    game.load.image("challengeslistbg", "./assets/images/challengeslistbg.png");
+    game.load.image("battlebutton", "./assets/images/battlebutton.png");
+    game.load.image(
+      "homebutton",
+      "./assets/images/homebutton.png"
+    );
   },
 
   create: function () {
+    game.add.sprite(0, 0, "challengeslistbg");
+    this.add.button(1180, 10, "homebutton", this.home, this);
+    game.add.text(
+      80,
+      380,
+        "SNo.  Time To Beat  Bet Amount    ",
+      {
+        font: "38px Arial",
+        fill: "#333",
+        align: "right",
+      }
+    );
     for (var i = 0; i < AllChallenges.length; i++) {
       game.add.text(
         100,
-        150 + 100 * i,
-          i +
+        450 + 100 * i,
+          (i+1) +
           "             " +
           AllChallenges[i].scoreToBeat/100 +
           "      " +
@@ -23,8 +40,8 @@ var ChallengesList = {
       );
       this.add.button(
         700,
-        150 + 97 * i,
-        "mint-car",
+        447 + 97 * i,
+        "battlebutton",
         this.acceptChallenge.bind(this, AllChallenges[i].index, selectedCar.index, AllChallenges[i].amount),
         this
       );
@@ -40,5 +57,9 @@ var ChallengesList = {
         console.log(res, "Accepted");
         game.state.start("Game");
       });
+  },
+
+  home: function () {
+    game.state.start('Login');
   },
 };

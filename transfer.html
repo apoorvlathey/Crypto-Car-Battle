@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+  <header>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+    />
+    <title>Transfer NFT tokens</title>
+
+    <link href="https://unpkg.com/cirrus-ui" type="text/css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+
+    <script src="./assets/js/web3.min.js"></script>
+    <script src="./assets/js/web3setup.js"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+    />
+    <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      #splash-img {
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      #hero-body {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      #fade {
+        background-image: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.0001),
+          #fff
+        );
+        bottom: 0;
+        height: 175px;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        position: absolute;
+        transition: all 0.3s;
+      }
+
+      #fade.faded {
+        opacity: 1;
+        transition: all 0.3s;
+      }
+
+      .padtop {
+        padding-top: 4rem;
+      }
+
+      .header {
+        transition: all 0.3s;
+      }
+
+      .header-clear-mod {
+        background-color: transparent;
+        box-shadow: none;
+        opacity: 0.9;
+        padding: 1.5rem;
+      }
+
+      .header-fill {
+        background-color: rgba(0, 0, 0, 0.87);
+      }
+
+      .translucent {
+        background: rgba(0, 0, 0, 0.87);
+      }
+
+      .header-clear-mod a {
+        color: #fff;
+      }
+
+      .header .nav-item button a:hover {
+        color: #fff;
+      }
+
+      .header .nav-item a .icon {
+        font-size: inherit;
+      }
+
+      .header .btn .btn-accent {
+        position: inherit;
+      }
+
+      section {
+        padding-bottom: 2rem;
+      }
+
+      .content h6 {
+        line-height: 2.25rem;
+      }
+
+      .font-normal {
+        font-weight: 400;
+      }
+
+      pre:not(.get-cirrus) > code {
+        padding: 1.5rem 1.5rem 1rem !important;
+        background: #f6f8fa;
+      }
+
+      .hljs {
+        max-height: 750px;
+      }
+
+      /* Colors */
+      .frame {
+        box-shadow: 0 0.2rem 1.25rem 0 rgba(27, 30, 36, 0.07);
+        margin: 1rem 0;
+      }
+
+      .color-panel {
+        transition-duration: 86ms;
+      }
+
+      .color-panel:hover {
+        box-shadow: 0 3rem 3rem -1.25rem rgba(10, 10, 10, 0.1);
+        -webkit-transform: translateY(-0.5rem);
+        transform: translateY(-0.5rem);
+      }
+
+      /* Fonts */
+      .desc {
+        font-size: 11px;
+        font-family: "Nunito Sans";
+        margin-left: 10px;
+        vertical-align: bottom;
+      }
+
+      .frame h2 {
+        word-break: break-all;
+      }
+
+      /* Buttons */
+      .btn-primary.hover,
+      .btn-primary.focus {
+        background-color: #d62939;
+      }
+
+      .btn-primary.focus {
+        box-shadow: 0 0 0 0.2rem rgba(240, 61, 76, 0.5);
+      }
+
+      ._shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      /* Checkboxes */
+      .form-ext-control {
+        margin-bottom: 0.75rem;
+      }
+
+      /* Tooltips */
+      #tooltips button {
+        text-align: center;
+      }
+
+      .doc-link {
+        font-weight: 300;
+        margin-right: 0.5rem;
+      }
+
+      /* Layout */
+      #grids .col > div,
+      #grids [class^="col-"] > div,
+      #grids [class*=" col-"] > div,
+      #grids .col > div,
+      #grids [class^="w-"] > div,
+      #grids [class*=" w-"] > div,
+      #grids [class^="h-"] > div,
+      #grids [class*=" h-"] > div {
+        background: #eee;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        min-height: 30px !important;
+        line-height: 30px;
+        margin-bottom: 0.75rem;
+        font-weight: bold;
+        letter-spacing: 0.1rem;
+      }
+
+      #grids [class^="h-"] > div,
+      #grids [class*=" h-"] > div {
+        height: 100%;
+      }
+
+      /* Examples */
+      #examples {
+        background-color: #1c222b;
+      }
+
+      /* Footer */
+      footer ul a {
+        display: block;
+      }
+
+      footer h3 {
+        letter-spacing: 6px;
+      }
+
+      footer .divider {
+        background: rgba(238, 238, 238, 0.2);
+        height: 1px;
+      }
+
+      footer p .fa.fa-heart {
+        color: #e90606;
+        margin: 0 3px;
+        animation: pound 0.35s infinite alternate;
+        -webkit-animation: pound 0.35s infinite alternate;
+        vertical-align: baseline;
+      }
+
+      /* Documentation Page */
+      .flex-wrap {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .doc-tile {
+        border-radius: 0.25rem;
+        color: var(--cirrus-fg);
+        cursor: pointer;
+        height: 100%;
+        padding: 2.5rem 2rem;
+        transition: all 0.2s;
+        user-select: none;
+      }
+
+      .col-6 a:focus {
+        box-shadow: none;
+      }
+
+      .doc-tile .lead {
+        font-size: 1.175rem;
+        line-height: 2rem;
+        margin-top: 0.5rem;
+      }
+
+      .doc-tile:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        color: #3273dc;
+        transition: all 0.2s;
+      }
+
+      .doc-tile:active {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: #3273dc;
+        transform: scale(0.98);
+      }
+
+      .demo-tooltip {
+        width: 100%;
+      }
+
+      /* Colors */
+      .color-circle {
+        border-radius: 50%;
+        margin: 0.5rem;
+        padding: 1rem;
+      }
+
+      pre.get-cirrus {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 0.3rem;
+        background: var(--cirrus-dark) !important;
+        margin: 1rem 0;
+      }
+
+      pre.get-cirrus code {
+        padding: 1rem;
+      }
+
+      /* Copy button */
+      pre .copy {
+        margin: auto 1rem;
+        color: #f03d4d;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.3rem;
+        font-weight: 700;
+        box-sizing: border-box;
+        user-select: none;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      pre .copy:hover {
+        background: #f03d4d;
+        color: #fff;
+        transition: all 0.2s;
+      }
+
+      /* Grid */
+      ._grid-ex {
+        background-color: #eee;
+        border-radius: 0.25rem;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .nav-item.has-sub .list-dropdown .btn-group button:not(.btn-dropdown) {
+          flex-grow: 1;
+        }
+      }
+    </style>
+  </header>
+
+  <body>
+    <div id="header" class="header header-top header-fixed unselectable">
+      <div class="header-brand">
+        <div class="nav-item no-hover">
+          <a href="./index.html">
+            <h5 class="title">
+              <i class="fas fa-wrapper fa-car small"></i> Crypto Car Battle
+            </h5>
+          </a>
+        </div>
+      </div>
+      <div class="header-nav" id="header-menu">
+        <div class="nav-right">
+          <div class="nav-item has-sub" style="padding: 0.5rem;">
+            <div class="list-dropdown dropdown-right">
+              <div class="btn-group">
+                <button class="btn-success u-no-padding">
+                  <a class="font-normal" href="./index.html">
+                    <span style="color: white;"><i class="fas fa-wrapper fa-home small"></i> Back to GAME</span>
+                  </a>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero fullscreen" style="margin-top: 3.5em;">
+      <div class="row u-no-padding">
+        <div class="col-6 u-no-padding level">
+          <div class="u-text-left w-100">
+            <div class="content">
+              <h4>Transfer Car NFT Token</h4>
+
+              <div class="divider"></div>
+
+              <div class="form-section changeInput">
+                <label class="font-semibold">Token Id:</label>
+                <div class="input-control">
+                  <input
+                    class="input-contains-icon"
+                    id="tid"
+                    name="tid"
+                    placeholder="..."
+                    type="text"
+                    value=""
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div class="form-section changeInput">
+                <label class="font-semibold">Transfer To:</label>
+                <div class="input-control">
+                  <input
+                    class="input-contains-icon"
+                    id="toaddr"
+                    name="toaddr"
+                    placeholder="Eth Address"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+
+              <div class="form-section u-text-right">
+                <div class="btn-container u-inline-block">
+                  <button
+                    class="white"
+                    style="background: var(--cirrus-success);"
+                    id="create"
+                  >
+                    Transfer
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 u-no-padding">
+          <div class="" style="margin: 300px; margin-top: 200px;">
+            <h4>NFT CAR:</h4>
+            <br /><img
+              id="carimg"
+              src=""
+              alt=""
+              height="93px"
+              width="150px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var carLevelWithColor = {
+        1: "violet",
+        2: "indigo",
+        3: "blue",
+        4: "green",
+        5: "yellow",
+        6: "orange",
+        7: "red",
+      };
+
+      var temp = window.location.search.substring(1).split("&");
+      var tokenId = temp[0].split("=")[1];
+      var level = temp[1].split("=")[1];
+      console.log(tokenId);
+
+      $("#tid").val(tokenId);
+      $("#carimg").attr("src", `./assets/images/cars/${carLevelWithColor[level]}.png`);
+
+      $(document).ready(function () {
+        $("#create").click(function () {
+          $("#create").addClass(
+            "animated loading u-center loading-right loading-white"
+          );
+
+          var toaddr = $("#toaddr").val();
+
+          contract.methods
+            .transferFrom(web3.eth.defaultAccount, toaddr, tokenId)
+            .send({
+              from: web3.eth.defaultAccount,
+            })
+            .then((r) => {
+              console.log(r);
+              $("#create").removeClass(
+                "animated loading u-center loading-right loading-white"
+              );
+              $("#create").text("Token Transferred!");
+            })
+            .catch((e) => {
+              $("#create").removeClass(
+                "animated loading u-center loading-right loading-white"
+              );
+              $("#create").text("There was an Error.");
+              $("#create").css("background", "var(--cirrus-danger)");
+            });
+        });
+      });
+    </script>
+
+    <script>
+      // TOGGLE DROPDOWN MENU
+      // Show / Hide menu when clicked
+      $(".has-sub").on("click", function (e) {
+        // Find all with ID
+        $(".dropdown-menu")
+          .not($(this).children(".dropdown-menu"))
+          .removeClass("dropdown-shown"); // Hide other menus
+        $(".has-sub").not($(this)).removeClass("active");
+        $(this).children(".dropdown-menu").toggleClass("dropdown-shown");
+        $(this).toggleClass("active");
+      });
+
+      $("section")
+        .not("#header-btn")
+        .on("click", function (e) {
+          // Hide when clicking section (will modify later)
+          $(".dropdown-menu").removeClass("dropdown-shown"); // Hide other menus clicking on window
+          $("#header-menu").removeClass("active");
+          $(".nav-item").removeClass("active");
+        });
+
+      // TOGGLE HEADER-NAV
+      // Show dropdown when clicked
+      $("#header-btn").on("click", function (e) {
+        $("#header-menu").toggleClass("active");
+        $(".nav-btn").toggleClass("active");
+      });
+
+      // Hide menu after clicking menu item
+      $(".dropdown-menu li").on("click", function (e) {
+        $("#header-menu").removeClass("active");
+        $(".nav-btn").removeClass("active");
+      });
+    </script>
+
+    <script src="https://use.fontawesome.com/a696b91557.js"></script>
+  </body>
+</html>

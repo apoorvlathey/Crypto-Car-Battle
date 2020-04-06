@@ -1,13 +1,23 @@
 var Mint = {
   preload: function () {
     game.load.image(
-      "mint-car",
-      "./assets/images/mint-car.png"
+      "mintbg",
+      "./assets/images/mintbg.png"
+    );
+    game.load.image(
+      "mintbutton",
+      "./assets/images/mintbutton.png"
+    );
+    game.load.image(
+      "homebutton",
+      "./assets/images/homebutton.png"
     );
   },
 
   create: function () {
-    this.add.button(0, 0, "mint-car", this.mintCar, this);
+    game.add.sprite(0, 0, "mintbg");
+    this.add.button(300, 400, "mintbutton", this.mintCar, this);
+    this.add.button(1180, 10, "homebutton", this.home, this);
   },
 
   mintCar: function () {
@@ -19,4 +29,8 @@ var Mint = {
         game.state.start('CarsListLoader');
       });
   },
+
+  home: function () {
+    game.state.start('Login');
+  }
 };

@@ -1,25 +1,35 @@
+var homebutton;
+
 var OpenForBattle = {
   preload: function () {
-    game.load.image("mint-car", "./assets/images/mint-car.png");
-    game.load.image("cup", "./assets/images/cup.png");
+    game.load.image("challengeothersbutton", "./assets/images/challengeothersbutton.png");
+    game.load.image("checkwinnerbutton", "./assets/images/checkwinnerbutton.png");
+    game.load.image("openforbattlebg", "./assets/images/openforbattlebg.png");
+    game.load.image(
+      "homebutton",
+      "./assets/images/homebutton.png"
+    );
   },
 
   create: function () {
+    game.add.sprite(0, 0, "openforbattlebg");
+    homebutton = this.add.button(1180, 10, "homebutton", this.home, this);
+    homebutton.visible = false;
     // If User as Player 1
     if (!BattleId) {
       createBattleButton = this.add.button(
-        0,
-        0,
-        "mint-car",
+        322,
+        513,
+        "challengeothersbutton",
         this.createBattle.bind(this),
         this
       );
     } else {
-      endBattleButton = this.add.button(0, 300, "cup", this.endBattle.bind(this), this);
+      endBattleButton = this.add.button(322, 513, "checkwinnerbutton", this.endBattle.bind(this), this);
     }
     gText = game.add.text(
-      200,
-      200,
+      426,
+      430,
       "You Scored: " + finalScore / 100 + " sec",
       {
         font: "42px Arial",
@@ -42,6 +52,7 @@ var OpenForBattle = {
           .then(function (res) {
             var Battle_Id = res - 1;
             createBattleButton.destroy();
+            homebutton.visible = true;
             gText.text = "Battle Id is: " + Battle_Id;
           });
       });
@@ -60,8 +71,13 @@ var OpenForBattle = {
             if (battle.winner == web3.eth.defaultAccount)
               gText.text = "YOU WON!! Car Levelled Up!";
             else gText.text = "You did not Win. Better Luck next time.";
+            homebutton.visible = true;
             endBattleButton.destroy();
           });
       });
+  },
+
+  home: function () {
+    game.state.start('Login');
   },
 };

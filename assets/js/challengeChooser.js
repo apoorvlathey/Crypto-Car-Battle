@@ -1,18 +1,27 @@
 var ChallengeChooser = {
   preload: function () {
     game.load.image(
-      "mint-car",
-      "./assets/images/mint-car.png"
+      "createbattlebutton",
+      "./assets/images/createbattlebutton.png"
     );
     game.load.image(
-      "cup",
-      "./assets/images/cup.png"
+      "competeexisting",
+      "./assets/images/competeexisting.png"
+    );
+    game.load.image(
+      "challengechooserbg", "./assets/images/challengechooserbg.png"
+    );
+    game.load.image(
+      "homebutton",
+      "./assets/images/homebutton.png"
     );
   },
 
   create: function () {
-    this.add.button(0, 0, "mint-car", this.startGame, this);
-    this.add.button(350, 0, "cup", this.gotoChallenges, this);
+    game.add.sprite(0, 0, "challengechooserbg");
+    this.add.button(0, 220, "createbattlebutton", this.startGame, this);
+    this.add.button(660, 504, "competeexisting", this.gotoChallenges, this);
+    this.add.button(1180, 10, "homebutton", this.home, this);
   },
 
   startGame: function () {
@@ -21,5 +30,9 @@ var ChallengeChooser = {
   
   gotoChallenges: function() {
     game.state.start('ChallengesListLoader');
-  }
+  },
+
+  home: function () {
+    game.state.start('Login');
+  },
 };
