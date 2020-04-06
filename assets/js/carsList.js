@@ -6,6 +6,7 @@ var CarsList = {
         `./assets/images/cars/${carLevelWithColor[i]}.png`
       );
     }
+    game.load.image("cup", "./assets/images/cup.png");
   },
 
   create: function () {
@@ -23,6 +24,6 @@ var CarsList = {
 
   selectCar: function (car) {
     selectedCar = car;
-    game.state.start('Game');
+    game.state.start('ChallengeChooser');
   },
 };

@@ -5,18 +5,20 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 contract CarBattle is ERC721 {
     
     struct Car {
+        uint index;
         uint level;
         uint speed;
     }
     
     struct Battle {
+        uint index;
         address payable p1;
         uint p1CarId;
-        uint scoreToBeat;     //microseconds
+        uint scoreToBeat;     //Unit: 100*second
         uint amount;
         address payable p2;
         uint p2CarId;
-        address winnner;
+        address winner;
         bool ended;
         uint createdAt;
     }
@@ -32,15 +34,15 @@ contract CarBattle is ERC721 {
     function mintCar() public {
         require(balanceOf(msg.sender) == 0);
         uint id = cars.length;
-        cars.push(Car(1, 9));
+        cars.push(Car(id, 1, 9));
         _mint(msg.sender, id);
     }
     
     function createBattle (uint _p1CarId, uint _score) public payable {
         require(msg.value > 0);
         require(ownerOf(_p1CarId) == msg.sender);
-        
-        battles.push(Battle(msg.sender, _p1CarId, _score, msg.value, address(0), 0, address(0), false, now));
+        uint id = battles.length;
+        battles.push(Battle(id, msg.sender, _p1CarId, _score, msg.value, address(0), 0, address(0), false, now));
     }
     
     function acceptBattle (uint _battleId, uint _p2CarId) public payable {
@@ -55,13 +57,13 @@ contract CarBattle is ERC721 {
     function endBattle (uint _battleId, uint _score) public {
         require(msg.sender == battles[_battleId].p2);
         Battle storage b = battles[_battleId];
-        if(_score > b.scoreToBeat) {
-            b.winnner = b.p2;
+        if(_score < b.scoreToBeat) {
+            b.winner = b.p2;
             upgradeLevel(b.p2CarId);
             b.p2.transfer(b.amount * 2);
             b.ended = true;
-        } else if (_score < b.scoreToBeat) {
-            b.winnner = b.p1;
+        } else if (_score > b.scoreToBeat) {
+            b.winner = b.p1;
             upgradeLevel(b.p1CarId);
             b.p1.transfer(b.amount * 2);
             b.ended = true;
@@ -85,5 +87,9 @@ contract CarBattle is ERC721 {
         Battle storage b = battles[_battleId];
         b.p1.transfer(b.amount);
         b.ended = true;
+    }
+    
+    function getBattlesCount() public view returns(uint) {
+        return battles.length;
     }
 }
