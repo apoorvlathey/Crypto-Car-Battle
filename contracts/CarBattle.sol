@@ -46,6 +46,7 @@ contract CarBattle is ERC721 {
     }
     
     function acceptBattle (uint _battleId, uint _p2CarId) public payable {
+        // require(msg.sender != battles[_battleId].p1);
         require(battles[_battleId].amount == msg.value);
         require(ownerOf(_p2CarId) == msg.sender);
         
