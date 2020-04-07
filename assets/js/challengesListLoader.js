@@ -3,7 +3,6 @@ var temp777 = 0, temptotal, tempcounter=0;
 
 var ChallengesListLoader = {
   preload: function () {
-    game.load.image("mint-car", "./assets/images/mint-car.png");
   },
 
   create: function () {
