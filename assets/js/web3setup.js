@@ -606,7 +606,12 @@ if (window.ethereum) {
   window.web3 = new Web3(ethereum);
   try {
     // Request account access if needed
-    ethereum.enable();
+		ethereum.enable();
+		window.web3.eth.net.getNetworkType().then(r => {
+			if(r != "rinkeby") {
+				alert("Connect Metamask to Rinkeby Testnet!")
+			}
+		});
     // Acccounts now exposed
   } catch (error) {
     // User denied account access...
