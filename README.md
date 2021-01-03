@@ -1,5 +1,5 @@
 # Crypto Car Battle
-NFT (ERC21) based HTML5 game with Crypto Payouts to the Winner.
+NFT (ERC721) based HTML5 game with Crypto Payouts to the Winner.
 ![](https://i.imgur.com/irWxoGw.png)
 ### (Demo deployed on Rinkeby Network)
 ### Try it out: [Web Demo Link](https://icoglance.com/car-battle)
@@ -14,9 +14,11 @@ b. Confirm Metamask Transaction![](https://i.imgur.com/74FiICm.png)
 
 ii) View your ERC-721 Cars collection
 ![](https://i.imgur.com/BMQUbPj.png)
+
 **New Cars Minted start from Level 1. With each win, their level increases by 1.
 (Max. level: 7)**
 ![](https://i.imgur.com/q8Yu3qL.png)
+
 ***Higher Level corresponds to Higher Speeds***
 
 3. Click on your desired car to get to the following menu:
