@@ -2,7 +2,7 @@
 NFT (ERC721) based HTML5 game with Crypto Payouts to the Winner.
 ![](https://i.imgur.com/irWxoGw.png)
 ### (Demo deployed on Rinkeby Network)
-### Try it out: [Web Demo Link](https://icoglance.com/car-battle)
+### Try it out: [Web Demo Link](https://apoorvlathey.com/projects/crypto-car-battle/)
 
 ## Game Walkthrough
 1. Login via Metamask
